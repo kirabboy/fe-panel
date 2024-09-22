@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import {  useLocation, useNavigate } from 'react-router-dom';
 import { clsx } from 'clsx';
 
 const navbars = [
@@ -12,23 +12,25 @@ const navbars = [
 
 const Navbar = () => {
   const { pathname } = useLocation();
+  const navigate = useNavigate()
 
   return (
     <nav className='w-full'>
-      <ul className='flex flex-col w-full gap-2'>
+      <ul className='flex flex-col w-full gap-[1px]'>
         {navbars.map((nav, index) => (
           <li
             key={index}
             className={clsx(
-              `text-white cursor- hover:text-black border border-none  font-semibold hover:bg-orange-100 px-2 py-1 rounded-md`,
-              pathname === nav.href &&
-                'hover:bg-orange-400 border px-2 py-1 rounded-md bg-orange-400  hover:text-white'
-            )}>
-            <Link
-              to={nav.href}
-              className=''>
+              `p-[10px_24px] font-normal hover:bg-[#2C3138] cursor-pointer`,
+              pathname === nav.href ?
+                'hover:bg-[#2C3138] bg-[#2C3138]  text-white border-l-[2px] border-l-[#fd9900] font-medium' : 'text-[#d6d7d9]'
+            )}
+            onClick={()=>navigate(nav.href)}
+            >
+            <p
+              className='text-nowrap text-[16px]'>
               {nav.label}
-            </Link>
+            </p>
           </li>
         ))}
       </ul>
