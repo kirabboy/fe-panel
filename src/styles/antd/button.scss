@@ -1,0 +1,39 @@
+.ant-btn {
+  padding: 0.5rem 1rem;
+  color: #555;
+  box-shadow: none;
+  &:focus-visible {
+    outline: none !important;
+    color: #555 !important;
+  }
+  &:active {
+    background-color: white !important;
+  }
+  &.ant-btn-text {
+    border: 0.1rem solid #ccc;
+    background-color: white;
+    color: #555;
+    &:hover,
+    &:focus {
+      background-color: #10952a !important;
+      border-color: #398439 !important;
+      p {
+        color: white;
+      }
+    }
+  }
+
+  &.ant-btn-primary {
+    border: 0.1rem solid #20a53a;
+    background-color: #20a53a;
+    color: white;
+    &:hover {
+      background-color: #10952a !important;
+      border-color: #398439 !important;
+    }
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+}
