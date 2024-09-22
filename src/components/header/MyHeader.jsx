@@ -3,9 +3,9 @@ import Navbar from './Navbar';
 
 const MyHeader = () => {
   return (
-    <section className='flex w-48 flex-col items-center justify-between px-6 bg-slate-600 h-screen py-10'>
-      <div className='flex flex-col items-center gap-10'>
-        <div className='w-40 '>
+    <section className='flex flex-col items-center justify-between bg-[#353D44] h-screen py-[12px] min-h-[100vh]'>
+      <div className='w-[200px]'>
+        <div className=''>
           <img
             className='w-full'
             src='/images/logo.jpg'

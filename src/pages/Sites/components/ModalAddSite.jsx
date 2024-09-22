@@ -1,10 +1,9 @@
 import { Button, Divider, Form, Input, message, Modal } from 'antd';
 
-import { PlusCircleOutlined } from '@ant-design/icons';
 import { createSiteApi } from '../../../api/websites';
 import validateUrl from '../../../utils/validateUrl';
 
-const ModalAddSite = ({ isModalOpen, showModal, handleOk, handleCancel }) => {
+const ModalAddSite = ({ isModalOpen, handleOk, handleCancel }) => {
   const submit = async (values) => {
     try {
       const res = await createSiteApi(values);
@@ -20,12 +19,7 @@ const ModalAddSite = ({ isModalOpen, showModal, handleOk, handleCancel }) => {
 
   return (
     <>
-      <Button
-        type='primary'
-        icon={<PlusCircleOutlined />}
-        onClick={showModal}>
-        Add
-      </Button>
+     
       <Modal
         title={
           <>

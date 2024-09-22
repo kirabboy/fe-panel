@@ -23,10 +23,10 @@ const Avatar = () => {
   };
 
   return (
-    <div>
+    <div className='bg-[#353D44]'>
       <div
         onClick={showDrawer}
-        className='w-9 h-9 border border-hidden rounded-full p-1 hover:cursor-pointer hover:border-primary  hover:border-solid transition-all cursor-pointer'>
+        className=''>
         <img
           className='w-full'
           src='/favicon.ico'
@@ -36,7 +36,7 @@ const Avatar = () => {
 
       <Drawer
         closeIcon={null}
-        title=<h2 className='text-primary text-2xl'>Hồ sơ cá nhân</h2>
+        title= {<h2 className='text-primary text-2xl'>Hồ sơ cá nhân</h2>}
         onClose={onClose}
         open={open}>
         <Space direction='vertical'>

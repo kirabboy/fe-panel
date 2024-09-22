@@ -1,51 +1,19 @@
-import { SnippetsOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate.js';
+import { Table, Tabs, Button } from 'antd';
+import data from './data.json';
+import Search from 'antd/es/transfer/search';
+import icons from '../../assets/icons';
 import ModalAddSite from './components/ModalAddSite';
-import { useEffect, useState } from 'react';
-import { Input, Table } from 'antd';
-import { getSiteApi } from '../../api/websites';
+import { useState } from 'react';
 
 const Sties = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [data, setData] = useState([]);
-  // const [params, setParams] = useState({
-  //   limit: '10',
-  //   name: '',
-  //   url: '',
-  //   user: '',
-  // });
-
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
-    fetchData();
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const fetchData = async () => {
-    try {
-      const res = await getSiteApi();
-
-      setData(res?.data?.items);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+  const [open,setOpen] = useState(false)
   const columns = [
     {
       key: 'name',
       title: 'Tên',
       dataIndex: 'name',
     },
-
     {
       key: 'url',
       title: 'Url',
@@ -59,7 +27,7 @@ const Sties = () => {
     },
     {
       key: 'vpsIpAddress',
-      title: 'VpsIpAddress',
+      title: 'Vps Ip Address',
       dataIndex: 'vpsIpAddress',
     },
     {
@@ -71,36 +39,73 @@ const Sties = () => {
     {
       key: 'action',
       title: 'Thao tác',
+      render: () => (
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button className="text-[#ffb029] underline">
+            <img src={icons.edit} alt="icon" />
+          </button>
+          <button className="text-[#ffb029] underline">
+            <img src={icons.trash} alt="icon" />
+          </button>
+          <button className="text-[#ffb029] underline">
+            <img src={icons.loader} alt="icon" />
+          </button>
+        </div>
+      ),
     },
   ];
 
-  return (
-    <section className='w-full'>
-      <div className='px-6 h-16 flex items-center justify-between bg-slate-200'>
-        <div>
-          <h2 className='uppercase font-semibold text-xl'>
-            <SnippetsOutlined className='text-primary' /> Sites Center
-          </h2>
+  const items = [
+    {
+      key: '1',
+      label: 'Node Project',
+      children: (
+        <div className="flex flex-col gap-[12px]">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-[0.4rem]">
+              <Button type="primary" onClick={()=>setOpen(true)}>Thêm</Button>
+              <Button className="border-[#ffb029]">Trang mặc định</Button>
+              <Button className="border-[#ffb029]">Website mặc định</Button>
+              <Button className="border-[#ffb029]">CLI version</Button>
+            </div>
+            <div className="w-[200px]">
+              <Search enterButton />
+            </div>
+          </div>
+          <Table columns={columns} dataSource={data} />
         </div>
-        <div className='flex items-center gap-4'>
-          <ModalAddSite
-            showModal={showModal}
-            handleOk={handleOk}
-            handleCancel={handleCancel}
-            isModalOpen={isModalOpen}
-            setIsModalOpen={setIsModalOpen}
-          />
-          <Input placeholder='Search' />
-        </div>
-      </div>
+      ),
+    },
+    {
+      key: '2',
+      label: 'PHP Project',
+      children: 'Content of Tab Pane 2',
+    },
+  ];
 
-      <div className='p-6'>
-        <Table
-          columns={columns}
-          dataSource={data}
+  const handleCloseModal = () =>{
+    setOpen(false)
+  }
+  const onChange = (key) => {
+    console.log(key);
+  };
+  return (
+    <>
+      <section className="w-full">
+        <Tabs
+          defaultActiveKey="1"
+          items={items}
+          onChange={onChange}
+          indicator={{
+            size: (origin) => origin - 20,
+            align: 'center',
+          }}
+          className="w-full"
         />
-      </div>
-    </section>
+        
+      </section>
+      <ModalAddSite isModalOpen={open} handleCancel={handleCloseModal} handleOk={handleCloseModal}/>
+    </>
   );
 };
 
