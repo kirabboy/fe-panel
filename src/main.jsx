@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
-
+import './styles/styles.scss';
 import { Router } from './router';
 import { ConfigProvider } from 'antd';
 
@@ -10,9 +10,10 @@ createRoot(document.getElementById('root')).render(
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#fd9900',
+          colorPrimary: '#20a53a',
         },
-      }}>
+      }}
+    >
       <Router />
     </ConfigProvider>
   </StrictMode>
