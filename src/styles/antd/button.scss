@@ -1,5 +1,5 @@
 .ant-btn {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.6rem;
   color: #555;
   box-shadow: none;
   &:focus-visible {
@@ -14,9 +14,11 @@
     background-color: white;
     color: #555;
     &:hover,
-    &:focus {
+    &:focus,
+    &:active {
       background-color: #10952a !important;
       border-color: #398439 !important;
+      color: white !important;
       p {
         color: white;
       }
@@ -27,13 +29,15 @@
     border: 0.1rem solid #20a53a;
     background-color: #20a53a;
     color: white;
-    &:hover {
+    &:hover,
+    &:focus,
+    &:active {
       background-color: #10952a !important;
       border-color: #398439 !important;
     }
   }
 
   p {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
   }
 }

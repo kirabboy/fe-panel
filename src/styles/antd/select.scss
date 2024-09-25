@@ -1,0 +1,33 @@
+.ant-select {
+  height: max-content;
+  .ant-select-selector {
+    min-height: 4.2rem;
+  }
+
+  .ant-select-arrow {
+    margin-top: 0;
+  }
+
+  .ant-select-selection-item {
+    color: black;
+    font-weight: 500;
+  }
+}
+
+.ant-select.ant-select-multiple,
+.ant-select {
+  .ant-select-arrow {
+    margin-top: -0.6rem;
+  }
+  .ant-select-selection-overflow-item {
+    .ant-select-selection-item {
+      color: black;
+      font-weight: 500;
+    }
+  }
+}
+
+.ant-input-outlined[disabled] {
+  color: black;
+  font-weight: 500;
+}

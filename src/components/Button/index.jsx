@@ -12,9 +12,10 @@ const ButtonComponent = (props) => {
         target="_blank"
         rel="noopener noreferrer"
         className={clsx(
-          'h-auto p-[0.5rem_1rem] rounded-[0.3rem] border-[0.1rem] border-solid border-[#ccc] bg-white text-[1.2rem] hover:bg-[#10952a] hover:border-[#398439] hover:text-white',
+          'h-auto p-[0.5rem_1rem] rounded-[0.3rem] border-[0.1rem] border-solid border-[#ccc] text-[1.2rem]',
           textClassName,
-          textColorClassName || 'text-inherit',
+          textColorClassName ||
+            'bg-[#10952a] hover:bg-[#398439] hover:border-[#398439] text-white',
           rest.className
         )}
       >

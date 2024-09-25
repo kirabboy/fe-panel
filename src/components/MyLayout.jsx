@@ -1,7 +1,13 @@
 import { Outlet } from 'react-router-dom';
 import MyHeader from './header/MyHeader';
+import { getAccessToken } from '../utils/getUser';
+import { useNavigate } from 'react-router-dom';
+import paths from '../utils/paths';
 
 const MyLayout = () => {
+  const navigate = useNavigate();
+  const login = getAccessToken();
+  if (!login) navigate(paths.LOGIN);
   return (
     <main className="flex min-h-[100vh]">
       <MyHeader />
