@@ -39,7 +39,6 @@ const FormServer = (props) => {
         vpsIpAddress: undefined,
         port: undefined,
         readTimeOut: undefined,
-        isActive: true,
       });
       return;
     }
