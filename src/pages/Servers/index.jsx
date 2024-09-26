@@ -1,64 +1,69 @@
-import { Tag } from 'antd';
-import { useFetchVPS } from '../../api/swr/useFetchVPS';
-import CardWrapper from '../../components/CardWrapper/CardWrapper';
-import TableComponent from '../../components/Table';
-import dayjs from 'dayjs';
-import constants from '../../utils/constants';
-import BadgeString from '../../components/Badge/BadgeString';
-import ActionsComponent from '../../components/Actions';
-import TableHeader from '../../components/TableHeader';
-import ModalComponent from '../../components/Modal';
-import FormServer from '../../components/Form/FormCreateServer';
-import { useState } from 'react';
-import { UseDeleteVPS } from '../../api/vps';
-import toast from 'react-hot-toast';
-import BadgePassword from '../../components/Badge/BadgePassword';
-import { formatNumberWithComma } from '../../utils/formatNumberWithComma';
-import DividerComponent from '../../components/Divider';
+import { Tag } from "antd";
+import { useFetchVPS } from "../../api/swr/useFetchVPS";
+import CardWrapper from "../../components/CardWrapper/CardWrapper";
+import TableComponent from "../../components/Table";
+import dayjs from "dayjs";
+import constants from "../../utils/constants";
+import BadgeString from "../../components/Badge/BadgeString";
+import ActionsComponent from "../../components/Actions";
+import TableHeader from "../../components/TableHeader";
+import ModalComponent from "../../components/Modal";
+import FormServer from "../../components/Form/FormCreateServer";
+import { useState } from "react";
+import { UseDeleteVPS } from "../../api/vps";
+import toast from "react-hot-toast";
+import BadgePassword from "../../components/Badge/BadgePassword";
+import { formatNumberWithComma } from "../../utils/formatNumberWithComma";
+import DividerComponent from "../../components/Divider";
 
 const Servers = () => {
-  const { data, isLoading, mutate } = useFetchVPS();
+  const params = {
+    isActive: true,
+    ipAddress: undefined,
+    keyword: undefined,
+  };
+  const { data, isLoading, mutate } = useFetchVPS(params);
   const [openFormModal, setOpenFormModal] = useState(false);
   const [formType, setFormType] = useState();
   const [record, setRecord] = useState();
   const [openTime, setOpenTime] = useState();
   const columns = [
     {
-      title: 'Địa chỉ IP',
-      dataIndex: 'vpsIpAddress',
-      key: 'vpsIpAddress',
+      title: "Địa chỉ IP",
+      dataIndex: "vpsIpAddress",
+      key: "vpsIpAddress",
     },
     {
-      title: 'Tài khoản',
-      dataIndex: 'userName',
-      key: 'userName',
+      title: "Tài khoản",
+      dataIndex: "userName",
+      key: "userName",
     },
     {
-      title: 'Mật khẩu',
-      dataIndex: 'password',
-      key: 'password',
+      title: "Mật khẩu",
+      dataIndex: "password",
+      key: "password",
       render: (password) => <BadgePassword password={password} />,
     },
     {
-      title: 'Trạng  thái',
-      dataIndex: 'isActive',
-      key: 'isActive',
+      title: "Trạng  thái",
+      dataIndex: "isActive",
+      key: "isActive",
       render: (isActive) => (
-        <Tag color={isActive ? 'success' : 'error'}>
-          {isActive ? 'Hoạt động' : 'Không hoạt động'}
+        <Tag color={isActive ? "success" : "error"}>
+          {isActive ? "Hoạt động" : "Không hoạt động"}
         </Tag>
       ),
     },
     {
-      title: 'Port',
-      dataIndex: 'port',
-      key: 'port',
+      title: "Port",
+      dataIndex: "port",
+      key: "port",
       render: (port) => <BadgeString text={port} />,
     },
     {
-      title: 'Thời gian chờ',
-      dataIndex: 'readTimeOut',
-      key: 'readTimeOut',
+      title: "Thời gian chờ",
+      dataIndex: "readTimeOut",
+      key: "readTimeOut",
       render: (readTimeOut) => (
         <BadgeString
           text={readTimeOut ? formatNumberWithComma(readTimeOut) : readTimeOut}
@@ -66,30 +71,30 @@ const Servers = () => {
       ),
     },
     {
-      title: 'Ngày tạo',
-      dataIndex: 'createdDate',
-      key: 'createdDate',
+      title: "Ngày tạo",
+      dataIndex: "createdDate",
+      key: "createdDate",
       render: (createdDate) =>
         dayjs(createdDate).format(constants.DATE_TIME_FORMAT),
     },
     {
-      title: 'Ngày cập nhật',
-      dataIndex: 'updatedDate',
-      key: 'updatedDate',
+      title: "Ngày cập nhật",
+      dataIndex: "updatedDate",
+      key: "updatedDate",
       render: (updatedDate) =>
         dayjs(updatedDate).format(constants.DATE_TIME_FORMAT),
     },
     {
-      title: 'Ngày xóa',
-      dataIndex: 'deletedAt',
-      key: 'deletedAt',
+      title: "Ngày xóa",
+      dataIndex: "deletedAt",
+      key: "deletedAt",
       render: (deletedAt) =>
-        deletedAt ? dayjs(deletedAt).format(constants.DATE_TIME_FORMAT) : '-',
+        deletedAt ? dayjs(deletedAt).format(constants.DATE_TIME_FORMAT) : "-",
     },
     {
-      title: 'Thao tác',
-      dataIndex: 'Actions',
-      key: 'Actions',
+      title: "Thao tác",
+      dataIndex: "Actions",
+      key: "Actions",
       render: (_, record) => (
         <ActionsComponent
           // onHandleView={() =>
@@ -99,10 +104,10 @@ const Servers = () => {
             if (record?.id) {
               const serverRes = await UseDeleteVPS(record.id);
               if (serverRes.statusCode === 200) {
-                toast.success('Xóa server thành công');
+                toast.success("Xóa server thành công");
                 mutate();
               } else {
-                toast.error('Xóa server thất bại');
+                toast.error("Xóa server thất bại");
               }
             }
           }}
@@ -114,8 +119,8 @@ const Servers = () => {
           }}
         />
       ),
-      align: 'right',
-      fixed: 'right',
+      align: "right",
+      fixed: "right",
     },
   ];
 
@@ -124,7 +129,7 @@ const Servers = () => {
   };
 
   const title =
-    formType === constants.CREATE ? 'Tạo mới server' : 'Cập nhật server';
+    formType === constants.CREATE ? "Tạo mới server" : "Cập nhật server";
   return (
     <CardWrapper>
       <TableHeader
@@ -134,13 +139,13 @@ const Servers = () => {
           setOpenTime(new Date().toString());
           setOpenFormModal(true);
         }}
-        buttonText={'Tạo mới server'}
+        buttonText={"Tạo mới server"}
       />
       <TableComponent
         columns={columns}
         dataSource={data}
         loading={isLoading}
-        isLoading={true}
+        isLoading={isLoading}
       />
 
       <ModalComponent
@@ -148,7 +153,7 @@ const Servers = () => {
         title={title}
         onCancel={handleCancelModal}
       >
-        <DividerComponent className={'h-[0.2rem] my-[1.2rem]'} />
+        <DividerComponent className={"h-[0.2rem] my-[1.2rem]"} />
         <FormServer
           formType={formType}
           record={record}

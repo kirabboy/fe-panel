@@ -16,8 +16,8 @@
     &:hover,
     &:focus,
     &:active {
-      background-color: #10952a !important;
-      border-color: #398439 !important;
+      background-color: #fd9900 !important;
+      border-color: #fd9900 !important;
       color: white !important;
       p {
         color: white;
@@ -26,15 +26,18 @@
   }
 
   &.ant-btn-primary {
-    border: 0.1rem solid #20a53a;
-    background-color: #20a53a;
+    border: 0.1rem solid #fd9900;
+    background-color: #fd9900;
     color: white;
     &:hover,
     &:focus,
     &:active {
-      background-color: #10952a !important;
-      border-color: #398439 !important;
+      background-color: #fd9900 !important;
+      border-color: #fd9900 !important;
     }
+  }
+  &.ant-btn-dangerous {
+    color: #ff4d4f;
   }
 
   p {

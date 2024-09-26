@@ -118,24 +118,26 @@ const FormServer = (props) => {
         errors={errors.vpsIpAddress}
         rules={formValidation.vpsIpAddress}
       />
-      <InputComponent
-        label="Port:"
-        placeholder="Port"
-        name="port"
-        control={control}
-        isRequired
-        errors={errors.port}
-        rules={formValidation.port}
-      />
-      <InputComponent
-        label="Thời gian chờ:"
-        placeholder="Thời gian chờ"
-        name="readTimeOut"
-        control={control}
-        isRequired
-        errors={errors.readTimeOut}
-        rules={formValidation.readTimeOut}
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-[1.2rem]">
+        <InputComponent
+          label="Port:"
+          placeholder="Port"
+          name="port"
+          control={control}
+          isRequired
+          errors={errors.port}
+          rules={formValidation.port}
+        />
+        <InputComponent
+          label="Thời gian chờ:"
+          placeholder="Thời gian chờ"
+          name="readTimeOut"
+          control={control}
+          isRequired
+          errors={errors.readTimeOut}
+          rules={formValidation.readTimeOut}
+        />
+      </div>
       {formType === constants.UPDATE && (
         <SelectComponent
           control={control}
