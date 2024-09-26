@@ -1,0 +1,11 @@
+.ant-input-search
+  > .ant-input-group
+  > .ant-input-group-addon:last-child
+  .ant-input-search-button:not(.ant-btn-primary) {
+  background-color: #fd9900;
+  color: white;
+}
+
+.ant-btn-variant-outlined {
+  border-color: #fd9900;
+}
