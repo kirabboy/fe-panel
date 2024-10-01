@@ -1,7 +1,8 @@
-import { Pagination, Table } from 'antd';
+import { Pagination, Table } from "antd";
 
 const TableComponent = (props) => {
-  const { pagination, isLoading, pageSizeUI, setCurrentPage, ...rest } = props;
+  const { paginationItem, isLoading, pageSizeUI, setCurrentPage, ...rest } =
+    props;
 
   const onChange = (page) => {
     setCurrentPage?.(page);
@@ -17,12 +18,12 @@ const TableComponent = (props) => {
               }
             : false
         }
-        scroll={{ x: 'max-content' }}
+        scroll={{ x: "max-content" }}
         {...rest}
       />
       {!isLoading && (
         <Pagination
-          {...pagination}
+          {...paginationItem}
           onChange={onChange}
           className="flex justify-end mt-[1.8rem]"
         />

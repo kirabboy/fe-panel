@@ -1,12 +1,13 @@
-import { DeleteFilled, EditFilled, SnippetsOutlined } from '@ant-design/icons';
-import formatDate from '@/utils/formatDate.js';
-import ModalAddSite from './components/ModalAddSite';
-import { useContext, useEffect, useState } from 'react';
-import { Button, Input, message, Popconfirm, Space } from 'antd';
-import { deleteSiteApi, getSiteApi } from '@/api/websites';
-import ModalEditSite from './components/ModalEditSite';
-import ModalAddSitesMany from './components/ModalAddSitesMany';
-import { UserContext } from '../../hooks/ContextUser';
+import { DeleteFilled, EditFilled, SnippetsOutlined } from "@ant-design/icons";
+import formatDate from "@/utils/formatDate.js";
+import ModalAddSite from "./components/ModalAddSite";
+import { useContext, useEffect, useState } from "react";
+import { Button, Input, message, Popconfirm, Space } from "antd";
+import { deleteSiteApi, getSiteApi } from "@/api/websites";
+import ModalEditSite from "./components/ModalEditSite";
+import ModalAddSitesMany from "./components/ModalAddSitesMany";
+import { UserContext } from "../../hooks/ContextUser";
+import TableComponent from "../../components/Table";
 
 const Sties = () => {
   const { user } = useContext(UserContext);
@@ -90,7 +91,7 @@ const Sties = () => {
     try {
       const res = await deleteSiteApi(id);
       if (res?.statusCode === 200) {
-        message.success('Xoá website thành công');
+        message.success("Xoá website thành công");
         fetchData();
       }
     } catch (e) {
@@ -100,41 +101,41 @@ const Sties = () => {
 
   const columns = [
     {
-      key: 'name',
-      title: 'Tên',
-      dataIndex: 'name',
+      key: "name",
+      title: "Tên",
+      dataIndex: "name",
     },
 
     {
-      key: 'url',
-      title: 'Url',
-      dataIndex: 'url',
+      key: "url",
+      title: "Url",
+      dataIndex: "url",
     },
     {
-      key: 'createdBy',
-      title: 'Người tạo',
-      dataIndex: 'createdBy',
+      key: "createdBy",
+      title: "Người tạo",
+      dataIndex: "createdBy",
       render: (obj) => <>{obj?.userName}</>,
     },
     {
-      key: 'vpsIpAddress',
-      title: 'VpsIpAddress',
-      dataIndex: 'vpsIpAddress',
+      key: "vpsIpAddress",
+      title: "VpsIpAddress",
+      dataIndex: "vpsIpAddress",
     },
     {
-      key: 'createdDate',
-      title: 'Ngày tạo',
-      dataIndex: 'createdDate',
+      key: "createdDate",
+      title: "Ngày tạo",
+      dataIndex: "createdDate",
       render: (value) => <>{formatDate(new Date(value))}</>,
     },
     {
-      key: 'action',
-      title: 'Thao tác',
+      key: "action",
+      title: "Thao tác",
       render: (obj) => (
-        <Space size='middle'>
+        <Space size="middle">
           <Button
-            shape='circle'
-            type='primary'
+            shape="circle"
+            type="primary"
             icon={<EditFilled />}
             onClick={() => showModalEdit(obj)}
           />
@@ -143,13 +144,10 @@ const Sties = () => {
             title={`Xóa người: ${obj?.name}`}
             description={`Bạn có chắc chắn muốn xóa người dùng: ${obj?.name} này không?`}
             onConfirm={() => confirm(obj?.id)}
-            okText='Có'
-            cancelText='Không'>
-            <Button
-              danger
-              shape='circle'
-              icon={<DeleteFilled />}
-            />
+            okText="Có"
+            cancelText="Không"
+          >
+            <Button danger shape="circle" icon={<DeleteFilled />} />
           </Popconfirm>
         </Space>
       ),
@@ -157,14 +155,14 @@ const Sties = () => {
   ];
 
   return (
-    <section className='w-full'>
-      <div className='px-6 h-16 flex items-center justify-between bg-slate-200'>
+    <section className="w-full">
+      <div className="px-6 h-16 flex items-center justify-between bg-slate-200">
         <div>
-          <h2 className='uppercase font-semibold text-xl'>
-            <SnippetsOutlined className='text-primary' /> WebSites Center
+          <h2 className="uppercase font-semibold text-xl">
+            <SnippetsOutlined className="text-primary" /> WebSites Center
           </h2>
         </div>
-        <div className='flex items-center gap-4'>
+        <div className="flex items-center gap-4">
           <ModalAddSite
             showModal={showModal}
             handleOk={handleOk}
@@ -183,49 +181,50 @@ const Sties = () => {
         </div>
       </div>
 
-      <div className='p-6'>
-        <div className='flex gap-2 mb-4'>
+      <div className="p-6">
+        <div className="flex gap-2 mb-4">
           {/* search Name */}
           <Input
             allowClear
-            className='w-56'
-            placeholder='Tìm theo tên'
+            className="w-56"
+            placeholder="Tìm theo tên"
             value={params.name}
             onChange={(e) =>
-              setParams((pre) => ({ ...pre, name: e.target.value ?? '' }))
+              setParams((pre) => ({ ...pre, name: e.target.value ?? "" }))
             }
           />
 
           {/* Search url */}
           <Input
             allowClear
-            className='w-56'
-            placeholder='Tìm theo url'
+            className="w-56"
+            placeholder="Tìm theo url"
             value={params.url}
             onChange={(e) =>
-              setParams((pre) => ({ ...pre, url: e.target.value ?? '' }))
+              setParams((pre) => ({ ...pre, url: e.target.value ?? "" }))
             }
           />
 
           {/* Search user */}
           <Input
             allowClear
-            className='w-56'
-            placeholder='Tìm theo người tạo'
+            className="w-56"
+            placeholder="Tìm theo người tạo"
             value={params.user}
             onChange={(e) =>
-              setParams((pre) => ({ ...pre, user: e.target.value ?? '' }))
+              setParams((pre) => ({ ...pre, user: e.target.value ?? "" }))
             }
           />
 
           {/* Button reset filter */}
           <Button
             onClick={() => setParams({ limit: 10 })}
-            className='bg-green-400 text-white'>
+            className="bg-green-400 text-white"
+          >
             Làm mới
           </Button>
         </div>
-        <MyTable
+        <TableComponent
           isLoading={isLoading}
           columns={columns}
           data={data}

@@ -17,12 +17,21 @@ import { formatNumberWithComma } from "../../utils/formatNumberWithComma";
 import DividerComponent from "../../components/Divider";
 
 const Servers = () => {
+  const [currentPage, setCurrentPage] = useState(1);
   const params = {
     isActive: true,
     ipAddress: undefined,
     keyword: undefined,
+    offset: constants.limit * (currentPage - 1) + 1,
+    page: currentPage,
+    limit: constants.limit,
   };
-  const { data, isLoading, mutate } = useFetchVPS(params);
+  const {
+    data,
+    pagination: pagination,
+    isLoading,
+    mutate,
+  } = useFetchVPS(params);
   const [openFormModal, setOpenFormModal] = useState(false);
   const [formType, setFormType] = useState();
   const [record, setRecord] = useState();
@@ -59,6 +68,18 @@ const Servers = () => {
       dataIndex: "port",
       key: "port",
       render: (port) => <BadgeString text={port} />,
+    },
+    {
+      title: "mysql_root_pwd",
+      dataIndex: "mysql_root_pwd",
+      key: "mysql_root_pwd",
+      render: (mysql_root_pwd) => <BadgePassword password={mysql_root_pwd} />,
+    },
+    {
+      title: "Tên domain",
+      dataIndex: "domain_name",
+      key: "domain_name",
+      render: (domain_name) => <BadgeString text={domain_name} />,
     },
     {
       title: "Thời gian chờ",
@@ -130,6 +151,7 @@ const Servers = () => {
 
   const title =
     formType === constants.CREATE ? "Tạo mới server" : "Cập nhật server";
+
   return (
     <CardWrapper>
       <TableHeader
@@ -146,6 +168,12 @@ const Servers = () => {
         dataSource={data}
         loading={isLoading}
         isLoading={isLoading}
+        paginationItem={{
+          current: currentPage,
+          total: pagination?.total || 1,
+          pageSize: constants.limit,
+        }}
+        setCurrentPage={setCurrentPage}
       />
 
       <ModalComponent

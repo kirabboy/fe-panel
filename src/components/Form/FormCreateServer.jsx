@@ -12,8 +12,12 @@ import DividerComponent from "../Divider";
 import { useState } from "react";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { getUserProfile } from "../../utils/getUser";
+import { useNavigate } from "react-router-dom";
+import paths from "../../utils/paths";
 
 const FormServer = (props) => {
+  const navigate = useNavigate();
   const { formType, record, openTime, handleCancelModal } = props;
   const [isLoading, setIsLoading] = useState(false);
   const {
@@ -44,9 +48,22 @@ const FormServer = (props) => {
   }, [openTime, record?.id]);
 
   const onSubmit = async (data) => {
+    const user = getUserProfile();
+
+    if (!user?.id) {
+      toast.error("Vui lòng đăng nhập!");
+      navigate(paths.LOGIN);
+      return;
+    }
+
     setIsLoading(true);
+    const convertData = {
+      ...data,
+      createdById: user.id,
+    };
+
     if (formType === constants.CREATE) {
-      const serverRes = await UseCreateVPS(data);
+      const serverRes = await UseCreateVPS(convertData);
       if (serverRes.statusCode === 200) {
         setIsLoading(false);
 
@@ -67,7 +84,10 @@ const FormServer = (props) => {
         port: data.port,
         readTimeOut: data.readTimeOut,
         isActive: data.isActive,
+        createdById: user.id,
       };
+      console.log("data", convertData);
+
       const serverRes = await UseUpdateVPS(record.id, convertData);
 
       if (serverRes.statusCode === 200) {

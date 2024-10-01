@@ -13,6 +13,9 @@ export const useFetchVPS = (params) => {
 
   return {
     data: data?.result || [],
+    pagination: {
+      total: data?.total || 0,
+    },
     isLoading,
     error,
     mutate,

@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { createContext } from 'react';
-import { USER_LOGIN_LOCAL_STORAGE } from '@/utils/contants.js';
+import { useEffect, useState } from "react";
+import { createContext } from "react";
+import variables from "../utils/variables";
 export const UserContext = createContext({
   user: null,
   setUserInformation: () => {},
@@ -15,7 +15,7 @@ const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const userLocal = localStorage.getItem(USER_LOGIN_LOCAL_STORAGE);
+    const userLocal = localStorage.getItem(variables.USER_LOGIN_LOCAL_STORAGE);
 
     userLocal && setUserInformation(JSON.parse(userLocal));
   }, []);
