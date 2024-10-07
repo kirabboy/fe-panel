@@ -1,4 +1,4 @@
-import { Tag } from "antd";
+import { Button, Tag } from "antd";
 import { useFetchVPS } from "../../api/swr/useFetchVPS";
 import CardWrapper from "../../components/CardWrapper/CardWrapper";
 import TableComponent from "../../components/Table";
@@ -15,6 +15,10 @@ import toast from "react-hot-toast";
 import BadgePassword from "../../components/Badge/BadgePassword";
 import { formatNumberWithComma } from "../../utils/formatNumberWithComma";
 import DividerComponent from "../../components/Divider";
+import { Dropdown } from "antd";
+import { Menu } from "antd";
+import { MoreOutlined } from "@ant-design/icons";
+import ServerInfoComponent from "../../components/ServerInfo";
 
 const Servers = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -36,6 +40,7 @@ const Servers = () => {
   const [formType, setFormType] = useState();
   const [record, setRecord] = useState();
   const [openTime, setOpenTime] = useState();
+  const [openServerInfo, setOpenServerInfo] = useState(false);
   const columns = [
     {
       title: "Địa chỉ IP",
@@ -118,9 +123,10 @@ const Servers = () => {
       key: "Actions",
       render: (_, record) => (
         <ActionsComponent
-          // onHandleView={() =>
-          //   navigate(`${paths.SERVER}/${constants.VIEW}/${record.id}`)
-          // }
+          onHandleView={() => {
+            setRecord(record);
+            setOpenServerInfo(true);
+          }}
           onHandleDelete={async () => {
             if (record?.id) {
               const serverRes = await UseDeleteVPS(record.id);
@@ -138,6 +144,35 @@ const Servers = () => {
             setOpenTime(new Date().toString());
             setOpenFormModal(true);
           }}
+          moreActions={
+            <Dropdown
+              overlay={
+                <Menu>
+                  <Menu.Item
+                    key="1"
+                    onClick={() => console.log("View", record)}
+                  >
+                    View
+                  </Menu.Item>
+                  <Menu.Item
+                    key="2"
+                    onClick={() => console.log("Edit", record)}
+                  >
+                    Edit
+                  </Menu.Item>
+                  <Menu.Item
+                    key="3"
+                    onClick={() => console.log("Delete", record)}
+                  >
+                    Delete
+                  </Menu.Item>
+                </Menu>
+              }
+              trigger={["click"]}
+            >
+              <Button type="text" icon={<MoreOutlined />} />
+            </Dropdown>
+          }
         />
       ),
       align: "right",
@@ -145,8 +180,12 @@ const Servers = () => {
     },
   ];
 
-  const handleCancelModal = () => {
+  const handleCancelModalForm = () => {
     setOpenFormModal(false);
+  };
+
+  const handleCaceclModalServerInfo = () => {
+    setOpenServerInfo(false);
   };
 
   const title =
@@ -179,16 +218,26 @@ const Servers = () => {
       <ModalComponent
         open={openFormModal}
         title={title}
-        onCancel={handleCancelModal}
+        onCancel={handleCancelModalForm}
       >
         <DividerComponent className={"h-[0.2rem] my-[1.2rem]"} />
         <FormServer
           formType={formType}
           record={record}
           openTime={openTime}
-          handleCancelModal={handleCancelModal}
+          handleCancelModal={handleCancelModalForm}
         />
       </ModalComponent>
+
+      {openServerInfo && (
+        <ModalComponent
+          open={openServerInfo}
+          title="Thông tin server"
+          onCancel={handleCaceclModalServerInfo}
+        >
+          <ServerInfoComponent vpsIpAddress={record?.vpsIpAddress} />
+        </ModalComponent>
+      )}
     </CardWrapper>
   );
 };

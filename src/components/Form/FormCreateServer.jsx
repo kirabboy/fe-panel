@@ -57,12 +57,15 @@ const FormServer = (props) => {
     }
 
     setIsLoading(true);
-    const convertData = {
-      ...data,
-      createdById: user.id,
-    };
 
     if (formType === constants.CREATE) {
+      const convertData = {
+        userName: data.userName,
+        password: data.password,
+        vpsIpAddress: data.vpsIpAddress,
+        port: Number(data.port),
+        readTimeOut: Number(data.readTimeOut),
+      };
       const serverRes = await UseCreateVPS(convertData);
       if (serverRes.statusCode === 200) {
         setIsLoading(false);
@@ -72,7 +75,7 @@ const FormServer = (props) => {
         reset();
       } else {
         setIsLoading(false);
-        toast.error(`Lưu thất bại: ${serverRes.message}`);
+        toast.error(`Lưu thất bại: ${serverRes.data.message}`);
       }
       return;
     }
@@ -81,10 +84,9 @@ const FormServer = (props) => {
         userName: data.userName,
         password: data.password,
         vpsIpAddress: data.vpsIpAddress,
-        port: data.port,
-        readTimeOut: data.readTimeOut,
+        port: Number(data.port),
+        readTimeOut: Number(data.readTimeOut),
         isActive: data.isActive,
-        createdById: user.id,
       };
       console.log("data", convertData);
 
@@ -97,7 +99,7 @@ const FormServer = (props) => {
         reset();
       } else {
         setIsLoading(false);
-        toast.error(`Lưu thất bại: ${serverRes.message}`);
+        toast.error(`Lưu thất bại: ${serverRes.data.message}`);
       }
       return;
     }
@@ -147,6 +149,7 @@ const FormServer = (props) => {
           isRequired
           errors={errors.port}
           rules={formValidation.port}
+          type="number"
         />
         <InputComponent
           label="Thời gian chờ:"
@@ -156,26 +159,10 @@ const FormServer = (props) => {
           isRequired
           errors={errors.readTimeOut}
           rules={formValidation.readTimeOut}
+          type="number"
         />
       </div>
-      {formType === constants.UPDATE && (
-        <SelectComponent
-          control={control}
-          name="isActive"
-          label="Trạng thái:"
-          placeholder="Trạng thái"
-          options={[
-            {
-              value: true,
-              label: "Hoạt động",
-            },
-            {
-              value: false,
-              label: "Không hoạt động",
-            },
-          ]}
-        />
-      )}
+
       <div className="flex flex-col justify-start items-end gap-[1.2rem]">
         <DividerComponent className={"h-[0.2rem]"} />
         <div className="flex justify-end items-center gap-[1.2rem]">
