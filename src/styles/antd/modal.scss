@@ -1,4 +1,6 @@
 .ant-modal {
+  width: auto !important;
+  min-width: 40rem;
   .ant-modal-title {
     font-weight: 700;
     text-transform: uppercase;

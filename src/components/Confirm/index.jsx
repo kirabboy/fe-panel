@@ -1,7 +1,7 @@
-import { ExclamationCircleFilled } from '@ant-design/icons';
-import { Modal } from 'antd';
+import { ExclamationCircleFilled } from "@ant-design/icons";
+import { Modal } from "antd";
 const { confirm } = Modal;
-const DeleteConfirmComponent = (props) => {
+const ConfirmComponent = (props) => {
   const { content, onOke, children, title } = props;
   const showConfirm = () => {
     confirm({
@@ -10,8 +10,8 @@ const DeleteConfirmComponent = (props) => {
       content: content,
       onOk: onOke,
       onCancel() {},
-      okText: 'Xác nhận',
-      cancelText: 'Hủy',
+      okText: "Xác nhận",
+      cancelText: "Hủy",
       centered: true,
       maskClosable: true,
     });
@@ -23,4 +23,4 @@ const DeleteConfirmComponent = (props) => {
   );
 };
 
-export default DeleteConfirmComponent;
+export default ConfirmComponent;
