@@ -17,13 +17,13 @@ import { formatNumberWithComma } from "../../utils/formatNumberWithComma";
 import DividerComponent from "../../components/Divider";
 import { Dropdown } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
-import ServerInfoComponent from "../../components/ServerInfo";
 import { Space } from "antd";
 import RestartVPSComponent from "../../components/pages/VPS/RestartVPS";
 import TurnOnAutoUpdateComponent from "../../components/pages/VPS/TurnOnAutoUpdate";
 import UpdatePluginAndWordpressCoreComponent from "../../components/pages/VPS/UpdatePluginAndWordpressCore";
 import ScanMalwareForWordpressComponent from "../../components/pages/VPS/ScanMalwareForWordpress";
 import ModalResultComponent from "../../components/ModalResult";
+import ServerInfoComponent from "../../components/pages/VPS/ServerInfo";
 const itemDropdowns = [
   {
     label: "Turn on Auto Update",
@@ -98,6 +98,7 @@ const Servers = () => {
       return;
     }
   };
+
   const columns = [
     {
       title: "Địa chỉ IP",
@@ -277,6 +278,7 @@ const Servers = () => {
           open={openServerInfo}
           title="Thông tin server"
           onCancel={handleCancelModalServerInfo}
+          width="800px"
         >
           <ServerInfoComponent vpsIpAddress={record?.vpsIpAddress} />
         </ModalComponent>

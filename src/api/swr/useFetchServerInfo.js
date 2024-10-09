@@ -13,7 +13,6 @@ export const useFetchServerInfo = (params) => {
     url,
     fetcher,
     {
-      refreshInterval: 1000,
     }
   );
 
