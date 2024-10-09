@@ -1,6 +1,6 @@
 import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, Space } from "antd";
-import DeleteConfirmComponent from "../DeleteConfirm";
+import ConfirmComponent from "../Confirm";
 
 const ActionsComponent = ({
   containerClassName,
@@ -21,12 +21,12 @@ const ActionsComponent = ({
     },
     {
       icon: (
-        <DeleteConfirmComponent
+        <ConfirmComponent
           title="Bạn có muốn xóa thông tin này không?"
           onOke={() => onHandleDelete?.()}
         >
           <DeleteOutlined />
-        </DeleteConfirmComponent>
+        </ConfirmComponent>
       ),
       danger: true,
     },

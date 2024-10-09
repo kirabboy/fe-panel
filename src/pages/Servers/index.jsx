@@ -16,14 +16,37 @@ import BadgePassword from "../../components/Badge/BadgePassword";
 import { formatNumberWithComma } from "../../utils/formatNumberWithComma";
 import DividerComponent from "../../components/Divider";
 import { Dropdown } from "antd";
-import { Menu } from "antd";
 import { MoreOutlined } from "@ant-design/icons";
 import ServerInfoComponent from "../../components/ServerInfo";
+import { Space } from "antd";
+import RestartVPSComponent from "../../components/pages/VPS/RestartVPS";
+import TurnOnAutoUpdateComponent from "../../components/pages/VPS/TurnOnAutoUpdate";
+import UpdatePluginAndWordpressCoreComponent from "../../components/pages/VPS/UpdatePluginAndWordpressCore";
+import ScanMalwareForWordpressComponent from "../../components/pages/VPS/ScanMalwareForWordpress";
+import ModalResultComponent from "../../components/ModalResult";
+const itemDropdowns = [
+  {
+    label: "Turn on Auto Update",
+    key: constants.TURN_ON_AUTO_UPDATE,
+  },
+  {
+    label: "Restart VPS",
+    key: constants.RESTART_VPS,
+  },
+  {
+    label: "Update Plugin And Wordpress Core",
+    key: constants.UPDATE_PLUGIN_AND_WORDPRESS_CORE,
+  },
+  {
+    label: "Scan Malware Wordpress",
+    key: constants.SCAN_MALWARE_WORDPRESS,
+  },
+];
 
 const Servers = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const params = {
-    isActive: true,
+    isActive: undefined,
     ipAddress: undefined,
     keyword: undefined,
     offset: constants.limit * (currentPage - 1) + 1,
@@ -41,6 +64,40 @@ const Servers = () => {
   const [record, setRecord] = useState();
   const [openTime, setOpenTime] = useState();
   const [openServerInfo, setOpenServerInfo] = useState(false);
+
+  const [status, setStatus] = useState({
+    actionText: "",
+    type: "",
+  });
+
+  const [openModalRestart, setOpenModalRestart] = useState(false);
+  const [openModalTurnOn, setOpenModalTurnOn] = useState(false);
+  const [openModalUpdatePluginWordpress, setOpenModalUpdatePluginWordpress] =
+    useState(false);
+
+  const [openModalScanMalware, setOpenModalScanMalware] = useState(false);
+  const [openModalResult, setOpenModalResult] = useState(false);
+  const onClick = ({ key }) => {
+    if (key === constants.RESTART_VPS) {
+      setOpenModalRestart(true);
+      return;
+    }
+
+    if (key === constants.TURN_ON_AUTO_UPDATE) {
+      setOpenModalTurnOn(true);
+      return;
+    }
+
+    if (key === constants.UPDATE_PLUGIN_AND_WORDPRESS_CORE) {
+      setOpenModalUpdatePluginWordpress(true);
+      return;
+    }
+
+    if (key === constants.SCAN_MALWARE_WORDPRESS) {
+      setOpenModalScanMalware(true);
+      return;
+    }
+  };
   const columns = [
     {
       title: "Địa chỉ IP",
@@ -146,31 +203,15 @@ const Servers = () => {
           }}
           moreActions={
             <Dropdown
-              overlay={
-                <Menu>
-                  <Menu.Item
-                    key="1"
-                    onClick={() => console.log("View", record)}
-                  >
-                    View
-                  </Menu.Item>
-                  <Menu.Item
-                    key="2"
-                    onClick={() => console.log("Edit", record)}
-                  >
-                    Edit
-                  </Menu.Item>
-                  <Menu.Item
-                    key="3"
-                    onClick={() => console.log("Delete", record)}
-                  >
-                    Delete
-                  </Menu.Item>
-                </Menu>
-              }
-              trigger={["click"]}
+              menu={{
+                items: itemDropdowns,
+                onClick,
+              }}
+              onClick={() => setRecord(record)}
             >
-              <Button type="text" icon={<MoreOutlined />} />
+              <Space>
+                <Button type="text" icon={<MoreOutlined />} />
+              </Space>
             </Dropdown>
           }
         />
@@ -184,7 +225,7 @@ const Servers = () => {
     setOpenFormModal(false);
   };
 
-  const handleCaceclModalServerInfo = () => {
+  const handleCancelModalServerInfo = () => {
     setOpenServerInfo(false);
   };
 
@@ -214,29 +255,93 @@ const Servers = () => {
         }}
         setCurrentPage={setCurrentPage}
       />
-
-      <ModalComponent
-        open={openFormModal}
-        title={title}
-        onCancel={handleCancelModalForm}
-      >
-        <DividerComponent className={"h-[0.2rem] my-[1.2rem]"} />
-        <FormServer
-          formType={formType}
-          record={record}
-          openTime={openTime}
-          handleCancelModal={handleCancelModalForm}
-        />
-      </ModalComponent>
-
+      {/* Modal form vps */}
+      {openFormModal && (
+        <ModalComponent
+          open={openFormModal}
+          title={title}
+          onCancel={handleCancelModalForm}
+        >
+          <DividerComponent className={"h-[0.2rem] my-[1.2rem]"} />
+          <FormServer
+            formType={formType}
+            record={record}
+            openTime={openTime}
+            handleCancelModal={handleCancelModalForm}
+          />
+        </ModalComponent>
+      )}
+      {/* Modal get server info */}
       {openServerInfo && (
         <ModalComponent
           open={openServerInfo}
           title="Thông tin server"
-          onCancel={handleCaceclModalServerInfo}
+          onCancel={handleCancelModalServerInfo}
         >
           <ServerInfoComponent vpsIpAddress={record?.vpsIpAddress} />
         </ModalComponent>
+      )}
+
+      {/* Modal restart vps */}
+      {openModalRestart && (
+        <RestartVPSComponent
+          status={status}
+          setStatus={setStatus}
+          openModal={openModalRestart}
+          setOpenModal={setOpenModalRestart}
+          vpsIpAddress={record?.vpsIpAddress}
+          openModalResult={openModalResult}
+          setOpenModalResult={setOpenModalResult}
+        />
+      )}
+
+      {/* Modal turn on auto update */}
+      {openModalTurnOn && (
+        <TurnOnAutoUpdateComponent
+          status={status}
+          setStatus={setStatus}
+          openModal={openModalTurnOn}
+          setOpenModal={setOpenModalTurnOn}
+          vpsIpAddress={record?.vpsIpAddress}
+          openModalResult={openModalResult}
+          setOpenModalResult={setOpenModalResult}
+        />
+      )}
+
+      {/* Modal update plugin and wordpress core */}
+      {openModalUpdatePluginWordpress && (
+        <UpdatePluginAndWordpressCoreComponent
+          status={status}
+          setStatus={setStatus}
+          openModal={openModalUpdatePluginWordpress}
+          setOpenModal={setOpenModalUpdatePluginWordpress}
+          vpsIpAddress={record?.vpsIpAddress}
+          openModalResult={openModalResult}
+          setOpenModalResult={setOpenModalResult}
+        />
+      )}
+
+      {/* Modal scan malware for wordpress */}
+      {openModalScanMalware && (
+        <ScanMalwareForWordpressComponent
+          status={status}
+          setStatus={setStatus}
+          openModal={openModalScanMalware}
+          setOpenModal={setOpenModalScanMalware}
+          vpsIpAddress={record?.vpsIpAddress}
+          openModalResult={openModalResult}
+          setOpenModalResult={setOpenModalResult}
+        />
+      )}
+
+      {/* Modal result when call api */}
+      {openModalResult && (
+        <ModalResultComponent
+          open={openModalResult}
+          setOpen={setOpenModalResult}
+          type={status.type}
+          actionText={status.actionText}
+        />
       )}
     </CardWrapper>
   );

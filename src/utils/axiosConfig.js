@@ -18,7 +18,8 @@ api.interceptors.request.use(
     if (token) {
       config.headers["Authorization"] = `Bearer ${token} `;
     }
-    return config;
+
+    if (config) return config;
   },
   (error) => {
     // Handle request errors here

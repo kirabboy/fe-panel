@@ -1,9 +1,9 @@
-import { Button } from 'antd';
-import clsx from 'clsx';
-import { Link } from 'react-router-dom';
+import { Button } from "antd";
+import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 const ButtonComponent = (props) => {
-  const { text, textClassName, textColorClassName, href, ...rest } = props;
+  const { text, textClassName, href, ...rest } = props;
 
   if (href) {
     return (
@@ -12,10 +12,9 @@ const ButtonComponent = (props) => {
         target="_blank"
         rel="noopener noreferrer"
         className={clsx(
-          'h-auto p-[0.5rem_1rem] rounded-[0.3rem] border-[0.1rem] border-solid border-[#ccc] text-[1.2rem]',
+          "h-auto p-[0.5rem_1rem] rounded-[0.3rem] border-[0.1rem] border-solid border-[#ccc] text-[1.2rem]",
           textClassName,
-          textColorClassName ||
-            'bg-[#10952a] hover:bg-[#398439] hover:border-[#398439] text-white',
+          "bg-[#10952a] hover:bg-[#398439] hover:border-[#398439] text-white",
           rest.className
         )}
       >
@@ -25,19 +24,11 @@ const ButtonComponent = (props) => {
   }
   return (
     <Button
-      type={rest.type ?? 'primary'}
+      type={rest.type ?? "primary"}
       {...rest}
-      className={clsx('w-fit h-auto rounded-[0.3rem]', rest.className)}
+      className={clsx("w-fit h-auto rounded-[0.3rem]", rest.className)}
     >
-      <p
-        className={clsx(
-          'h-auto',
-          textClassName,
-          textColorClassName || 'text-inherit'
-        )}
-      >
-        {text}
-      </p>
+      <p className={clsx("h-auto", textClassName || "text-inherit")}>{text}</p>
     </Button>
   );
 };

@@ -65,6 +65,7 @@ const FormServer = (props) => {
         vpsIpAddress: data.vpsIpAddress,
         port: Number(data.port),
         readTimeOut: Number(data.readTimeOut),
+        createdById: user.id,
       };
       const serverRes = await UseCreateVPS(convertData);
       if (serverRes.statusCode === 200) {
@@ -86,7 +87,7 @@ const FormServer = (props) => {
         vpsIpAddress: data.vpsIpAddress,
         port: Number(data.port),
         readTimeOut: Number(data.readTimeOut),
-        isActive: data.isActive,
+        createdById: user.id,
       };
       console.log("data", convertData);
 
