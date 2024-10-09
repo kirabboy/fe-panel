@@ -40,7 +40,7 @@ const ModalResultComponent = (props) => {
           </p>
 
           <p className="text-[1.6rem] font-[500] text-black text-center">
-            {`${actionText} thành công!`}
+            {actionText}
           </p>
 
           <ButtonComponent
@@ -71,7 +71,7 @@ const ModalResultComponent = (props) => {
           </p>
 
           <p className="text-[1.6rem] font-[500] text-black text-center">
-            {`${actionText} thất bại!`}
+            {actionText}
           </p>
 
           <ButtonComponent

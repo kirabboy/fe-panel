@@ -27,6 +27,7 @@ const TurnOnAutoUpdateComponent = (props) => {
           setStatus((prev) => ({
             ...prev,
             type: constants.SUCCESS,
+            actionText: "Turn on auto update thành công!",
           }));
         }, 500);
       } else {
@@ -34,6 +35,7 @@ const TurnOnAutoUpdateComponent = (props) => {
           setStatus((prev) => ({
             ...prev,
             type: constants.FAIL,
+            actionText: `Turn on auto update thất bại: ${res.data.message}!`,
           }));
         }, 500);
       }
@@ -42,6 +44,7 @@ const TurnOnAutoUpdateComponent = (props) => {
         setStatus((prev) => ({
           ...prev,
           type: constants.FAIL,
+          actionText: `Turn on auto update thất bại!`,
         }));
       }, 500);
     }

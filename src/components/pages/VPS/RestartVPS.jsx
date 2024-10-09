@@ -33,6 +33,7 @@ const RestartVPSComponent = (props) => {
           setStatus((prev) => ({
             ...prev,
             type: constants.SUCCESS,
+            actionText: "Restart VPS thành công!",
           }));
         }, 500);
       } else {
@@ -40,6 +41,7 @@ const RestartVPSComponent = (props) => {
           setStatus((prev) => ({
             ...prev,
             type: constants.FAIL,
+            actionText: `Restart VPS thất bại: ${res.data.message}!`,
           }));
         }, 500);
       }
@@ -48,6 +50,7 @@ const RestartVPSComponent = (props) => {
         setStatus((prev) => ({
           ...prev,
           type: constants.FAIL,
+          actionText: `Restart VPS thất bại!`,
         }));
       }, 500);
     }

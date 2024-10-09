@@ -27,6 +27,7 @@ const UpdatePluginAndWordpressCoreComponent = (props) => {
           setStatus((prev) => ({
             ...prev,
             type: constants.SUCCESS,
+            actionText: "Update plugin and wordpress core thành công!",
           }));
         }, 500);
       } else {
@@ -34,6 +35,7 @@ const UpdatePluginAndWordpressCoreComponent = (props) => {
           setStatus((prev) => ({
             ...prev,
             type: constants.FAIL,
+            actionText: `Update plugin and wordpress core thất bại: ${res.data.messages}!`,
           }));
         }, 500);
       }
@@ -42,6 +44,7 @@ const UpdatePluginAndWordpressCoreComponent = (props) => {
         setStatus((prev) => ({
           ...prev,
           type: constants.FAIL,
+          actionText: `Update plugin and wordpress core thất bại!`,
         }));
       }, 500);
     }
