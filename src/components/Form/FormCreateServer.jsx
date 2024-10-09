@@ -57,7 +57,7 @@ const FormServer = (props) => {
     }
 
     setIsLoading(true);
-
+    console.log("data", data);
     if (formType === constants.CREATE) {
       const convertData = {
         userName: data.userName,
