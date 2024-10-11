@@ -18,7 +18,12 @@ const ModalResultComponent = (props) => {
     return (
       <ModalComponent open={open}>
         <div className="w-[35.2rem] h-[23.9rem] flex flex-col justify-center items-center">
-          <Spin tip="Loading" size="large" />
+          <Spin size="large" />
+        </div>
+        <div>
+          <p className="text-[1.6rem] font-medium text-black text-center animate-pulse pb-[1.2rem]">
+            Đang trong quá trình xử lý, vui lòng chờ!
+          </p>
         </div>
       </ModalComponent>
     );
@@ -35,7 +40,7 @@ const ModalResultComponent = (props) => {
           >
             <CloseOutlined className="text-[3rem]" />
           </div>
-          <p className="text-[2.4rem] font-extrabold text-black text-center">
+          <p className="text-[2rem] font-bold text-black text-center">
             Thành công
           </p>
 
@@ -66,7 +71,7 @@ const ModalResultComponent = (props) => {
           >
             <CloseOutlined className="text-[3rem]" />
           </div>
-          <p className="text-[2.4rem] font-extrabold text-black text-center">
+          <p className="text-[2rem] font-bold text-black text-center">
             Thất bại
           </p>
 

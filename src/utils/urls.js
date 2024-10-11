@@ -6,5 +6,6 @@ const urls = {
   UPDATE_PLUGIN_AND_WORDPRESS_CORE:
     "v1/vps/website/updatePluginAndWordpressCore",
   SCAN_MALWARE_WORDPRESS: "v1/vps/website/scanMalwareForWordpress",
+  EXEC_INFO: "v1/vps/execInfo",
 };
 export default urls;

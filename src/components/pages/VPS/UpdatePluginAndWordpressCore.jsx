@@ -1,6 +1,7 @@
 import constants from "../../../utils/constants";
 import MoreActionModalComponent from "./MoreActionModal";
 import { UseUpdatePluginAndWordpressCore } from "../../../api/vps";
+import { UseExecInfo } from "../../../api/execInfo";
 
 const UpdatePluginAndWordpressCoreComponent = (props) => {
   const {
@@ -18,35 +19,60 @@ const UpdatePluginAndWordpressCoreComponent = (props) => {
     setStatus((prev) => ({
       ...prev,
       type: constants.LOADING,
-      actionText: "Update plugin and wordpress core",
+      actionText: "Đang trong quá trình xử lý, vui lòng chờ!",
     }));
     try {
       const res = await UseUpdatePluginAndWordpressCore(vpsIpAddress);
-      if (res && res?.statusCode === 200) {
-        setTimeout(() => {
-          setStatus((prev) => ({
-            ...prev,
-            type: constants.SUCCESS,
-            actionText: "Update plugin and wordpress core thành công!",
-          }));
-        }, 500);
-      } else {
-        setTimeout(() => {
-          setStatus((prev) => ({
-            ...prev,
-            type: constants.FAIL,
-            actionText: `Update plugin and wordpress core thất bại: ${res.data.messages}!`,
-          }));
-        }, 500);
+      if (res && res?.statusCode === 200 && res?.data?.execInfo?.id) {
+        const interval = setInterval(async () => {
+          try {
+            const response = await UseExecInfo(res?.data?.execInfo?.id);
+            if (response?.statusCode === 200 && response?.data?.isSuccess) {
+              setStatus({
+                type: constants.SUCCESS,
+                actionText: "Update plugin and wordpress core thành công!",
+              });
+              clearInterval(interval);
+            }
+
+            if (response?.statusCode === 200 && response?.data?.isError) {
+              let parseValue = "";
+              if (response?.data?.value) {
+                parseValue = JSON.parse(response?.data?.value);
+              }
+              setStatus({
+                type: constants.FAIL,
+                actionText: `Update plugin and wordpress core thất bại: ${parseValue.level}!`,
+              });
+              clearInterval(interval);
+            }
+
+            if (
+              response?.statusCode === 200 &&
+              !response?.data?.isError &&
+              !response?.data?.isSuccess
+            ) {
+              setStatus({
+                type: constants.LOADING,
+                actionText: "Đang trong quá trình xử lý, vui lòng chờ!",
+              });
+            }
+          } catch (err) {
+            console.log("err", err);
+            setStatus({
+              type: constants.FAIL,
+              actionText: `Lỗi server: ${err.message}`,
+            });
+            clearInterval(interval);
+          }
+        }, 5000);
       }
-    } catch {
-      setTimeout(() => {
-        setStatus((prev) => ({
-          ...prev,
-          type: constants.FAIL,
-          actionText: `Update plugin and wordpress core thất bại!`,
-        }));
-      }, 500);
+    } catch (err) {
+      console.log("err", err);
+      setStatus({
+        type: constants.FAIL,
+        actionText: `Lỗi server: ${err.message}`,
+      });
     }
   };
 
