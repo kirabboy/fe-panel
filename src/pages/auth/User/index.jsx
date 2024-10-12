@@ -2,12 +2,13 @@ import {
   DeleteFilled,
   EditFilled,
   UserSwitchOutlined,
-} from '@ant-design/icons';
-import { Button, Input, message, Popconfirm, Space, Tag } from 'antd';
-import ModalAddUser from './components/ModalAddUser';
-import { useEffect, useState } from 'react';
-import { deleteUsersApi, getUsersApi } from '@/api/user';
-import ModalEditUser from './components/ModalEditUser';
+} from "@ant-design/icons";
+import { Button, Input, message, Popconfirm, Space, Tag } from "antd";
+import ModalAddUser from "./components/ModalAddUser";
+import { useEffect, useState } from "react";
+import { deleteUsersApi, getUsersApi } from "@/api/user";
+import ModalEditUser from "./components/ModalEditUser";
+import MyTable from "../../../components/MyTable";
 
 const User = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,7 +49,7 @@ const User = () => {
     try {
       const res = await deleteUsersApi(values);
       if (res?.statusCode === 200) {
-        message.success('Xoá người dùng thành công');
+        message.success("Xoá người dùng thành công");
         fetchData();
       }
     } catch (e) {
@@ -58,37 +59,35 @@ const User = () => {
 
   const columns = [
     {
-      key: 'name',
-      title: 'Tên',
-      dataIndex: 'name',
+      key: "name",
+      title: "Tên",
+      dataIndex: "name",
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
+      title: "Email",
+      dataIndex: "email",
     },
     {
-      title: 'Phân quyền',
-      dataIndex: 'role',
+      title: "Phân quyền",
+      dataIndex: "role",
       render: (text) => (
-        <Tag
-          className='uppercase'
-          color={text === 'admin' && 'orange'}>
+        <Tag className="uppercase" color={text === "admin" && "orange"}>
           {text}
         </Tag>
       ),
     },
     {
-      title: 'Ngày sinh',
-      dataIndex: 'dob',
+      title: "Ngày sinh",
+      dataIndex: "dob",
     },
     {
-      title: 'Thao tác',
-      key: 'action',
+      title: "Thao tác",
+      key: "action",
       render: (obj) => (
-        <Space size='middle'>
+        <Space size="middle">
           <Button
-            shape='circle'
-            type='primary'
+            shape="circle"
+            type="primary"
             icon={<EditFilled />}
             onClick={() => showModalEdit(obj)}
           />
@@ -97,13 +96,10 @@ const User = () => {
               title={`Xóa người: ${obj?.name}`}
               description={`Bạn có chắc chắn muốn xóa người dùng: ${obj?.name} này không?`}
               onConfirm={() => confirm(obj?.id)}
-              okText='Có'
-              cancelText='Không'>
-              <Button
-                shape='circle'
-                danger
-                icon={<DeleteFilled />}
-              />
+              okText="Có"
+              cancelText="Không"
+            >
+              <Button shape="circle" danger icon={<DeleteFilled />} />
             </Popconfirm>
           )}
         </Space>
@@ -135,10 +131,10 @@ const User = () => {
   }, [params]);
 
   return (
-    <div className='w-full'>
-      <div className='w-full gap-2 px-6  h-16 flex items-center justify-between bg-slate-200'>
-        <h2 className='uppercase font-semibold text-xl'>
-          <UserSwitchOutlined className='text-primary' /> User
+    <div className="w-full">
+      <div className="w-full gap-2 px-6  h-16 flex items-center justify-between bg-slate-200">
+        <h2 className="uppercase font-semibold text-xl">
+          <UserSwitchOutlined className="text-primary" /> User
         </h2>
         <ModalAddUser
           showModal={showModal}
@@ -151,14 +147,14 @@ const User = () => {
 
       {/* table  */}
 
-      <div className='p-6 flex flex-col gap-2'>
+      <div className="p-6 flex flex-col gap-2">
         <Input
           value={params.email}
           onChange={(e) =>
-            setParams((pre) => ({ ...pre, email: e.target.value ?? '' }))
+            setParams((pre) => ({ ...pre, email: e.target.value ?? "" }))
           }
-          className='w-64'
-          placeholder='Tìm theo email'
+          className="w-64"
+          placeholder="Tìm theo email"
         />
         <MyTable
           isLoading={isLoading}

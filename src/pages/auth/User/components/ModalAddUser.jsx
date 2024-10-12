@@ -13,7 +13,6 @@ import { PlusCircleOutlined } from "@ant-design/icons";
 import ROLES from "@/utils/roles.js";
 import formatDate from "@/utils/formatDate";
 import {} from "@/api/user.js";
-import { createaUserApi } from "@/api/user.js";
 import validateEmail from "@/utils/validateEmail";
 import validatePhoneNumber from "@/utils/validatePhoneNumber";
 import validateDOB from "@/utils/validateDOB";
@@ -22,6 +21,7 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import constants from "../../../../utils/constants";
+import { createUserApi } from "../../../../api/user";
 
 dayjs.extend(customParseFormat);
 
@@ -33,7 +33,7 @@ const ModalAddUser = ({ isModalOpen, showModal, handleOk, handleCancel }) => {
     const date = formatDate(new Date(values?.dob));
     setIsLoading(true);
     try {
-      const res = await createaUserApi({
+      const res = await createUserApi({
         ...values,
         dob: date,
         roles: [

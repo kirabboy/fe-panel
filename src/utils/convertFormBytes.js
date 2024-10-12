@@ -15,7 +15,5 @@ export const convertFromBytes = (bytes) => {
     index++;
   }
 
-  console.log(bytes);
-
   return `${bytes.toFixed(2)} ${units[index]}`; // Format the result to 2 decimal places
 };

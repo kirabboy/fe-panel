@@ -1,0 +1,20 @@
+.ant-picker.ant-picker-outlined {
+  padding: 0 1.1rem;
+  .ant-picker-input {
+    height: 4rem;
+    input {
+      font-weight: 500;
+      color: black;
+    }
+  }
+}
+
+.ant-picker.ant-picker-disabled.ant-picker-outlined {
+  .ant-picker-input {
+    height: 4rem;
+    input {
+      font-weight: 500;
+      color: black;
+    }
+  }
+}

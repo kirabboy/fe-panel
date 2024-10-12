@@ -16,8 +16,8 @@ const ModalResultComponent = (props) => {
   };
   if (type === constants.LOADING)
     return (
-      <ModalComponent open={open}>
-        <div className="w-[35.2rem] h-[23.9rem] flex flex-col justify-center items-center">
+      <ModalComponent open={open} className={""}>
+        <div className="w-full h-[23.9rem] flex flex-col justify-center items-center">
           <Spin size="large" />
         </div>
         <div>

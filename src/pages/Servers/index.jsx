@@ -262,6 +262,7 @@ const Servers = () => {
           open={openFormModal}
           title={title}
           onCancel={handleCancelModalForm}
+          className="!w-[55rem]"
         >
           <DividerComponent className={"h-[0.2rem] my-[1.2rem]"} />
           <FormServer

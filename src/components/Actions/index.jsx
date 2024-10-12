@@ -29,14 +29,19 @@ const ActionsComponent = ({
         </ConfirmComponent>
       ),
       danger: true,
+      onClick: () => {},
     },
   ];
 
   return (
     <Space size="middle" className={containerClassName}>
-      {actionItems.map((item, index) => (
-        <Button shape="circle" key={index} {...item} />
-      ))}
+      {actionItems.map((item, index) => {
+        if (item?.onClick) {
+          return <Button shape="circle" key={index} {...item} />;
+        } else {
+          return null;
+        }
+      })}
       {moreActions}
     </Space>
   );

@@ -64,8 +64,6 @@ const ServerInfoComponent = (props) => {
     ipAddress: vpsIpAddress,
   });
 
-  console.log("useFetchServerInfo", data);
-
   if (isLoading || isValidating)
     return (
       <div className="w-full h-[35rem] flex justify-center items-center">
